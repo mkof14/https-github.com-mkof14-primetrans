@@ -6,6 +6,17 @@ export interface ProjectMetric {
   icon: LucideIcon;
 }
 
+export interface ProjectTimeline {
+  date: string;
+  event: string;
+  description: string;
+}
+
+export interface ProjectTechnicalSpec {
+  label: string;
+  value: string;
+}
+
 export interface Project {
   id: number;
   slug: string;
@@ -20,6 +31,8 @@ export interface Project {
   metrics: ProjectMetric[];
   image: string;
   gallery: string[];
+  timeline?: ProjectTimeline[];
+  technicalSpecs?: ProjectTechnicalSpec[];
 }
 
 export const projectsData: Project[] = [
@@ -49,6 +62,18 @@ export const projectsData: Project[] = [
       'https://picsum.photos/seed/logistics-g1/800/600',
       'https://picsum.photos/seed/logistics-g2/800/600',
       'https://picsum.photos/seed/logistics-g3/800/600'
+    ],
+    timeline: [
+      { date: 'Q1 2025', event: 'Initial Audit', description: 'Comprehensive analysis of existing warehouse workflows and delivery bottlenecks.' },
+      { date: 'Q2 2025', event: 'Model Development', description: 'Training machine learning models on 5 years of historical logistics data.' },
+      { date: 'Q3 2025', event: 'Pilot Program', description: 'Deployment of AI sorting in the primary regional distribution center.' },
+      { date: 'Q4 2025', event: 'Global Rollout', description: 'Full integration across all 15 international hubs.' }
+    ],
+    technicalSpecs: [
+      { label: 'AI Framework', value: 'TensorFlow / PyTorch' },
+      { label: 'Data Processing', value: 'Apache Spark' },
+      { label: 'Infrastructure', value: 'AWS SageMaker' },
+      { label: 'Integration', value: 'SAP ERP / Oracle' }
     ]
   },
   {

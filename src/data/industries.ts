@@ -1,12 +1,12 @@
-import { Binary, Cpu, Leaf, FlaskConical, Beaker, ShoppingCart, Layers } from 'lucide-react';
+import { Binary, Cpu, Leaf, FlaskConical, Beaker, ShoppingCart, Layers, Monitor } from 'lucide-react';
 
 export const industriesData = [
   {
     id: 'it-software',
     name: 'IT & Software',
-    icon: Binary,
+    icon: Monitor,
     shortDesc: 'Managing complex enterprise systems and digital transformation.',
-    fullDesc: 'In the rapidly evolving digital landscape, we provide the strategic oversight necessary to manage complex enterprise software ecosystems. From legacy system modernization to the deployment of cutting-edge SaaS platforms, our management approach ensures that your IT infrastructure is resilient, scalable, and perfectly aligned with your business objectives.',
+    fullDesc: 'Managing complex enterprise systems and digital transformation.',
     image: 'https://picsum.photos/seed/it-software/1200/800',
     features: [
       'Enterprise Resource Planning (ERP) Management',

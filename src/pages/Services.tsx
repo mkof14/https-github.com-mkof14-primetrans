@@ -10,6 +10,8 @@ import {
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { servicesData } from '../data/services';
+import MagneticButton from '../components/MagneticButton';
+import AIInsightsTool from '../components/AIInsightsTool';
 
 const workflowSteps = [
   {
@@ -41,102 +43,123 @@ const workflowSteps = [
 
 export default function Services() {
   return (
-    <div className="pt-32 pb-24">
+    <div className="pt-40 pb-24 relative overflow-hidden">
       <SEO 
         title="Our Services"
         description="Comprehensive project management solutions across IT, AI, Machine Learning, Cybersecurity, Renewable Energy, and more."
         keywords="management consulting, AI project management, IT solutions, cybersecurity management, renewable energy projects"
       />
+      
       <div className="max-w-7xl mx-auto px-6">
-        <header className="mb-24 text-left max-w-4xl">
+        <header className="mb-32 text-left max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h2 className="label-caps mb-6">Our Services</h2>
-            <h1 className="text-6xl md:text-8xl font-extralight tracking-tight mb-8 leading-none">
+            <h2 className="label-caps mb-8">Our Services</h2>
+            <h1 className="text-7xl md:text-9xl font-extralight tracking-tighter mb-12 leading-[0.85]">
               Comprehensive <br />
               <span className="font-serif italic font-normal text-gradient">Management</span> <br />
               <span className="text-slate-400/50">Solutions.</span>
             </h1>
-            <p className="text-lg text-slate-500 font-light max-w-xl border-l border-slate-200 dark:border-slate-800 pl-6">
+            <p className="text-xl text-slate-500 dark:text-slate-400 font-light max-w-xl border-l-2 border-brand-primary/20 pl-10">
               We provide the operational backbone for cutting-edge industries and emerging technologies worldwide.
             </p>
           </motion.div>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-48">
           {servicesData.map((service, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
-              className="p-12 bg-white dark:bg-slate-900 rounded-[3.5rem] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all group relative overflow-hidden"
+              transition={{ delay: idx * 0.1 }}
+              className="p-12 glass-card-modern rounded-[4rem] group relative overflow-hidden flex flex-col justify-between"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-primary/5 rounded-full -mr-16 -mt-16 group-hover:bg-brand-primary/10 transition-colors" />
+              <div className="absolute top-0 right-0 w-48 h-48 bg-brand-primary/5 rounded-full -mr-24 -mt-24 group-hover:bg-brand-primary/10 transition-all duration-700" />
               
-              <div className="flex flex-col lg:flex-row items-start gap-8 mb-10">
-                <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-[2rem] flex items-center justify-center text-brand-primary group-hover:bg-vibrant-gradient group-hover:text-white group-hover:shadow-xl group-hover:shadow-brand-primary/20 transition-all duration-500 shrink-0">
-                  <service.icon size={40} />
+              <div className="relative">
+                <div className="flex items-center gap-8 mb-10">
+                  <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-[2rem] flex items-center justify-center text-brand-primary group-hover:bg-vibrant-gradient group-hover:text-white group-hover:shadow-2xl group-hover:shadow-brand-primary/30 transition-all duration-700 shrink-0">
+                    <service.icon size={40} />
+                  </div>
+                  <h3 className="text-4xl font-black tracking-tighter group-hover:text-brand-primary transition-colors">{service.title}</h3>
                 </div>
-                <div>
-                  <h3 className="text-3xl font-black tracking-tight mb-4">{service.title}</h3>
-                  <p className="text-slate-500 text-base leading-relaxed mb-6 font-medium">
-                    {service.description}
-                  </p>
-                  <Link 
-                    to={`/service/${service.id}`} 
-                    className="text-brand-primary font-black text-xs uppercase tracking-widest flex items-center gap-2 hover:gap-4 transition-all"
-                  >
-                    Learn More <ArrowRight size={18} />
-                  </Link>
+                
+                <p className="text-slate-500 text-lg leading-relaxed mb-10 font-medium">
+                  {service.description}
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+                  {service.features.map((feature, fIdx) => (
+                    <div key={fIdx} className="flex items-center gap-4 text-sm font-black uppercase tracking-widest text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors">
+                      <div className="w-2 h-2 rounded-full bg-brand-primary shadow-[0_0_10px_rgba(14,165,233,0.5)]" />
+                      {feature}
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-8 border-t border-slate-50 dark:border-slate-800">
-                {service.features.map((feature, fIdx) => (
-                  <div key={fIdx} className="flex items-center gap-3 text-sm font-bold text-slate-600 dark:text-slate-400">
-                    <div className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
-                    {feature}
-                  </div>
-                ))}
-              </div>
+              <MagneticButton className="mt-auto">
+                <Link 
+                  to={`/service/${service.id}`} 
+                  className="inline-flex items-center gap-4 text-brand-primary font-black uppercase tracking-widest text-xs group/link"
+                >
+                  Explore Service <ArrowRight className="group-hover/link:translate-x-2 transition-transform" />
+                </Link>
+              </MagneticButton>
             </motion.div>
           ))}
         </div>
 
         {/* How We Work Section */}
-        <section className="py-24 mb-32">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-brand-primary mb-6">Our Process</h2>
-            <h3 className="text-5xl font-black tracking-tighter mb-8 leading-none">How We <span className="text-gradient">Work</span>.</h3>
-            <p className="text-lg text-slate-500 font-medium">A systematic approach to navigating technical complexity and delivering excellence.</p>
+        <section className="py-32 mb-48 relative">
+          <div className="text-center max-w-3xl mx-auto mb-32">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-primary mb-8"
+            >
+              Our Process
+            </motion.h2>
+            <motion.h3 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-6xl md:text-8xl font-extralight tracking-tighter mb-10 leading-none"
+            >
+              How We <span className="font-serif italic font-normal text-gradient">Work.</span>
+            </motion.h3>
+            <p className="text-xl text-slate-500 font-light">A systematic approach to navigating technical complexity and delivering excellence.</p>
           </div>
 
           <div className="relative">
             {/* Connection Line (Desktop) */}
-            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-slate-100 dark:bg-slate-800 -translate-y-1/2 -z-10" />
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-slate-200 dark:bg-slate-800 -translate-y-1/2 -z-10" />
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
               {workflowSteps.map((step, idx) => (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
                   className="relative flex flex-col items-center text-center group"
                 >
-                  <div className="w-20 h-20 bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-slate-100 dark:border-slate-800 flex items-center justify-center text-brand-primary mb-8 group-hover:bg-vibrant-gradient group-hover:text-white group-hover:border-transparent group-hover:shadow-xl group-hover:shadow-brand-primary/20 transition-all duration-500 relative z-10">
-                    <step.icon size={32} />
-                    <div className="absolute -top-3 -right-3 w-8 h-8 bg-slate-900 dark:bg-slate-50 text-white dark:text-slate-900 rounded-full flex items-center justify-center text-xs font-black">
+                  <div className="w-24 h-24 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 flex items-center justify-center text-brand-primary mb-10 group-hover:bg-vibrant-gradient group-hover:text-white group-hover:border-transparent group-hover:shadow-2xl group-hover:shadow-brand-primary/30 transition-all duration-700 relative z-10">
+                    <step.icon size={36} />
+                    <div className="absolute -top-4 -right-4 w-10 h-10 bg-slate-950 dark:bg-white text-white dark:text-slate-950 rounded-full flex items-center justify-center text-xs font-black shadow-xl">
                       0{idx + 1}
                     </div>
                   </div>
-                  <h4 className="text-xl font-black tracking-tight mb-4">{step.title}</h4>
-                  <p className="text-slate-500 text-sm leading-relaxed font-medium">
+                  <h4 className="text-2xl font-black tracking-tight mb-6 group-hover:text-brand-primary transition-colors">{step.title}</h4>
+                  <p className="text-slate-500 text-sm leading-relaxed font-medium opacity-80 group-hover:opacity-100 transition-opacity">
                     {step.description}
                   </p>
                 </motion.div>
@@ -145,28 +168,43 @@ export default function Services() {
           </div>
         </section>
 
+        {/* AI Tool Section */}
+        <section className="mb-48">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <h2 className="label-caps mb-6">Interactive Strategy</h2>
+            <h3 className="text-5xl md:text-7xl font-extralight tracking-tighter mb-8 leading-none">
+              AI-Powered <span className="font-serif italic font-normal text-gradient">Perspectives</span>.
+            </h3>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <AIInsightsTool />
+          </div>
+        </section>
+
         {/* Custom Solutions Section */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="bg-slate-900 dark:bg-slate-800 rounded-[3rem] p-12 md:p-20 text-white relative overflow-hidden"
+          className="bg-slate-950 dark:bg-brand-primary rounded-[4rem] p-12 md:p-24 text-white relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/20 rounded-full -mr-32 -mt-32 blur-3xl" />
-          <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white/5 rounded-full -mr-300 -mt-300 blur-[120px]" />
+          <div className="relative z-10 grid lg:grid-cols-2 gap-24 items-center">
             <div>
-              <h2 className="text-4xl font-bold mb-6">Custom Solutions for Unique Challenges</h2>
-              <p className="text-lg text-white/70 leading-relaxed">
+              <h2 className="text-5xl md:text-7xl font-extralight tracking-tighter mb-10 leading-[0.9]">Custom Solutions for Unique Challenges.</h2>
+              <p className="text-xl text-white/70 leading-relaxed font-light">
                 Don't see exactly what you're looking for? We specialize in creating tailored management solutions that address your specific technical requirements, industry constraints, and business objectives.
               </p>
             </div>
             <div className="flex justify-center lg:justify-end">
-              <Link
-                to="/contact"
-                className="bg-white text-slate-900 px-10 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform flex items-center gap-2"
-              >
-                Discuss Your Venture <ArrowRight size={20} />
-              </Link>
+              <MagneticButton>
+                <Link
+                  to="/contact"
+                  className="bg-white text-slate-950 px-12 py-6 rounded-2xl font-black uppercase tracking-widest text-sm shadow-2xl hover:scale-105 transition-all flex items-center gap-4"
+                >
+                  Discuss Your Venture <ArrowRight size={20} />
+                </Link>
+              </MagneticButton>
             </div>
           </div>
         </motion.div>

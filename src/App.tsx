@@ -1,31 +1,66 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './context/ThemeContext';
+import { motion, AnimatePresence } from 'motion/react';
+import { lazy, Suspense } from 'react';
+
+// Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import Services from './pages/Services';
-import Projects from './pages/Projects';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import IndustryDetail from './pages/IndustryDetail';
-import ProjectDetail from './pages/ProjectDetail';
-import ServiceDetail from './pages/ServiceDetail';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfService from './pages/TermsOfService';
-import { motion, AnimatePresence } from 'motion/react';
-import { ReactNode } from 'react';
+import CustomCursor from './components/CustomCursor';
+import FloatingBackground from './components/FloatingBackground';
+import Loading from './components/Loading';
+import CookieConsent from './components/CookieConsent';
 
-function PageWrapper({ children }: { children: ReactNode }) {
+// Lazy Loaded Pages
+const Home = lazy(() => import('./pages/Home'));
+const Services = lazy(() => import('./pages/Services'));
+const Projects = lazy(() => import('./pages/Projects'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Careers = lazy(() => import('./pages/Careers'));
+const ClientPortal = lazy(() => import('./pages/ClientPortal'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPostDetail = lazy(() => import('./pages/BlogPostDetail'));
+const IndustryDetail = lazy(() => import('./pages/IndustryDetail'));
+const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+
+function AnimatedRoutes() {
+  const location = useLocation();
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.4 }}
-    >
-      {children}
-    </motion.div>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Suspense fallback={<Loading />}>
+          <Routes location={location}>
+            <Route path="/" element={<Home />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/service/:id" element={<ServiceDetail />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/project/:slug" element={<ProjectDetail />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/portal" element={<ClientPortal />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPostDetail />} />
+            <Route path="/industry/:id" element={<IndustryDetail />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+          </Routes>
+        </Suspense>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
@@ -35,24 +70,15 @@ export default function App() {
       <ThemeProvider>
         <Router>
           <div className="min-h-screen flex flex-col">
+            <div className="noise-overlay" />
+            <FloatingBackground />
+            <CustomCursor />
             <Navbar />
             <main className="flex-grow">
-              <AnimatePresence mode="wait">
-                <Routes>
-                  <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-                  <Route path="/services" element={<PageWrapper><Services /></PageWrapper>} />
-                  <Route path="/service/:id" element={<PageWrapper><ServiceDetail /></PageWrapper>} />
-                  <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
-                  <Route path="/project/:slug" element={<PageWrapper><ProjectDetail /></PageWrapper>} />
-                  <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
-                  <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
-                  <Route path="/industry/:id" element={<PageWrapper><IndustryDetail /></PageWrapper>} />
-                  <Route path="/privacy" element={<PageWrapper><PrivacyPolicy /></PageWrapper>} />
-                  <Route path="/terms" element={<PageWrapper><TermsOfService /></PageWrapper>} />
-                </Routes>
-              </AnimatePresence>
+              <AnimatedRoutes />
             </main>
             <Footer />
+            <CookieConsent />
           </div>
         </Router>
       </ThemeProvider>

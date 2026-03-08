@@ -131,6 +131,48 @@ export default function ProjectDetail() {
           </div>
         </div>
 
+        {/* Deep Dive: Timeline & Technical Specs */}
+        {(project.timeline || project.technicalSpecs) && (
+          <div className="grid lg:grid-cols-[1fr_350px] gap-16 mb-24">
+            {project.timeline && (
+              <div>
+                <h2 className="text-3xl font-bold mb-12">Project Timeline</h2>
+                <div className="space-y-12 relative before:absolute before:left-[15px] before:top-2 before:bottom-2 before:w-px before:bg-slate-200 dark:before:bg-slate-800">
+                  {project.timeline.map((item, idx) => (
+                    <div key={idx} className="relative pl-12">
+                      <div className="absolute left-0 top-1 w-8 h-8 rounded-full bg-white dark:bg-slate-950 border-2 border-brand-primary flex items-center justify-center z-10">
+                        <div className="w-2 h-2 rounded-full bg-brand-primary" />
+                      </div>
+                      <div className="text-xs font-black uppercase tracking-widest text-brand-primary mb-2">{item.date}</div>
+                      <h4 className="text-xl font-bold mb-2">{item.event}</h4>
+                      <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {project.technicalSpecs && (
+              <div className="space-y-8">
+                <h2 className="text-3xl font-bold mb-12">Technical Specs</h2>
+                <div className="glass-card-modern p-8 rounded-[2.5rem] space-y-6">
+                  {project.technicalSpecs.map((spec, idx) => (
+                    <div key={idx} className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4 last:border-0 last:pb-0">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{spec.label}</span>
+                      <span className="font-bold text-sm text-slate-900 dark:text-white">{spec.value}</span>
+                    </div>
+                  ))}
+                  <div className="pt-6">
+                    <button className="w-full py-4 rounded-xl border border-brand-primary/20 text-brand-primary text-[10px] font-black uppercase tracking-widest hover:bg-brand-primary hover:text-white transition-all">
+                      Download Whitepaper
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Gallery */}
         <div className="mb-24">
           <h2 className="text-3xl font-bold mb-12 text-center">Project Implementation</h2>
